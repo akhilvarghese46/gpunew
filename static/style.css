@@ -1,0 +1,18 @@
+body {
+  font-family: "helvetica", sans-serif;
+  justify-content: center;
+  align-items: center;
+  background: #baede2;
+}
+
+.maindiv {
+  width: 390px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 77px 55px 33px 55px;
+  transform: translate(-50%, -50%);
+}
