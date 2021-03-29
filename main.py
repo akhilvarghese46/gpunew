@@ -32,6 +32,16 @@ def checkUserData():
             error_message = str(exc)
     return claims
 
+def getgpudata():
+    gpu_data = []
+    query = datastore_client.query(kind="GpuInfo")
+    query = query.fetch()
+    for i in query:
+        data = dict(i)
+        data["name"] = i.key.name
+        gpu_data.append(data)
+    return gpu_data
+
 #root function is a default function
 @app.route('/')
 def root():
@@ -74,6 +84,21 @@ def gpudatacreate():
     else:
         error_message = "Page is not loaded! User Data is missing"
         return render_template("index.html", user_data=user_data, error_message=error_message)
+
+@app.route("/gpulist", methods=["GET", "POST"])
+def allgpulist():
+    user_data =checkUserData();
+    if user_data == None:
+        error_message = "Page not loaded! User Data is missing"
+        return render_template("index.html", user_data=user_data, error_message=error_message)
+    else:
+        try:
+            gpu_data = getgpudata()
+            return render_template("gpulist.html", user_data=user_data, gpu_list=gpu_data)
+        except ValueError as exc:
+            error_message = str(exc)
+            return render_template("error.html", error_message=error_message)
+
 
 @app.route("/gpusignout", methods=["GET", "POST"])
 def gpusignout():
