@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% block title %}List{% endblock %}
+{% block content %}
+<h3>List of Graphics Processing Units</h3>
+<table border="1" style="border-collapse:collapse;table-layout: fixed; word-wrap: break-word;">
+  <colgroup>
+    <col span="1" style="width: 30%;">
+    <col span="1" style="width: 28%;">
+    <col span="1" style="width: 35%;">
+    <col span="1" style="width: 25%;">
+    <col span="1" style="width: 25%;">
+    <col span="1" style="width: 25%;">
+    <col span="1" style="width: 25%;">
+    <col span="1" style="width: 25%;">
+    <col span="1" style="width: 25%;">
+    <col span="1" style="width: 25%;">
+  </colgroup>
+  <tr>
+    <th>Name</th>
+    <!---<th>Manufacturer</th>
+    <th>Date of Issue</th>
+    <th>Geometry Shader</th>
+    <th>Tesselation Shader</th>
+    <th>Shader Int16</th>
+    <th>Sparse Binding</th>
+    <th>Texture Compression ETC2</th>
+    <th>Vertex Pipeline Stores and Atomics</th>--->
+    <th>Delete</th>
+  </tr>
+  {% if gpu_list|length == 0 %}
+  <tr>
+    <td colspan="10" style="text-align: center;">------ No GPU Data found ------</td>
+  </tr>
+  {% else: %}
+  {% for gpu_data in gpu_list %}
+  <tr>
+    <td><a href="/gpudetails"> {{gpu_data.name}} </a></td>
+    <!---<td>{{gpu_data.manufacturer}}</td>
+    <td>{{gpu_data.doi}}</td>
+    <td>{{gpu_data.geometryShader}}</td>
+    <td>{{gpu_data.tesselationShader}}</td>
+    <td>{{gpu_data.shaderInt16}}</td>
+    <td>{{gpu_data.sparseBinding}}</td>
+    <td>{{gpu_data.textureCompressionETC2}}</td>
+    <td>{{gpu_data.vertexPipelineStoresAndAtomics}}</td>--->
+    <td><a href="/gpudelete/{{gpu_data.name}}" style="color: red;"> X </a></td>
+  </tr>
+  {% endfor %}
+  {%endif%}
+</table>
+{% endblock %}

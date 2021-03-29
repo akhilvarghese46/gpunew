@@ -9,12 +9,12 @@
   <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
   <script src="{{ url_for('static', filename='app-setup.js') }}"></script>
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
   <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
 </head>
 
 <body>
   <div class="maindiv" style="width: 70%;height: 70%;">
+    <button id="sign-out" soutvalue="false" hidden="true">Sign out</button>
     <h3 style="text-align:center">Graphics Processing Units</h3>
 
     {% if user_data %}
@@ -44,6 +44,8 @@
     </div>
 
   </div>
+  {% block js %}
+  {% endblock %}
 </body>
 
 </html>
