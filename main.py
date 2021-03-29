@@ -99,6 +99,22 @@ def allgpulist():
             error_message = str(exc)
             return render_template("error.html", error_message=error_message)
 
+@app.route("/gpudetails/<name>", methods=["GET", "POST"])
+def gpudatadetails(name=None):
+    user_data =checkUserData();
+    if user_data != None:
+        if name:
+            entity_key = datastore_client.key("GpuInfo", name)
+            enitity_exists = datastore_client.get(key=entity_key)
+            if enitity_exists:
+                enitity_exists = dict(enitity_exists)
+                enitity_exists["name"] = name
+                return render_template("gpudetails.html", gpu_data=enitity_exists, user_data=user_data)
+            else:
+                return render_template("error.html", error_message="No data found")
+    else:
+        error_message = "Page is not loaded! User Data is missing"
+        return render_template("index.html", user_data=user_data, error_message=error_message)
 
 @app.route("/gpusignout", methods=["GET", "POST"])
 def gpusignout():

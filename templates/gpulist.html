@@ -34,7 +34,7 @@
   {% else: %}
   {% for gpu_data in gpu_list %}
   <tr>
-    <td><a href="/gpudetails"> {{gpu_data.name}} </a></td>
+    <td><a href="/gpudetails/{{gpu_data.name}}"> {{gpu_data.name}} </a></td>
     <!---<td>{{gpu_data.manufacturer}}</td>
     <td>{{gpu_data.doi}}</td>
     <td>{{gpu_data.geometryShader}}</td>

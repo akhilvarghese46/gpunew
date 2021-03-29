@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<h3>Graphics Processing Unit</h3>
+<a class="anglebutton" style="width: 7% !important; height: 30px !important; color: #2b07f1;" href="/gpuedit/{{gpu_data.name}}">Edit</a>
+<table>
+  <tr>
+    <td>Name</td>
+    <td>{{gpu_data.name}}</td>
+  </tr>
+  <tr>
+    <td>Manufacturer</td>
+    <td>{{gpu_data.manufacturer}}</td>
+  </tr>
+  <tr>
+    <td>Date of Issue</td>
+    <td>{{gpu_data.doi}}</td>
+  </tr>
+  <tr>
+    <td>Geometry Shader</td>
+    <td>{% if gpu_data.geometryShader %} &#9989; {% else %} &#10060;{% endif %} {{gpu_data.geometryShader}}</td>
+  </tr>
+  <tr>
+    <td>Tesselation Shader</td>
+    <td>{% if gpu_data.tesselationShader %} &#9989; {% else %} &#10060;{% endif %} {{gpu_data.tesselationShader}}</td>
+  </tr>
+  <tr>
+    <td>Shader Int16</td>
+    <td>{% if gpu_data.shaderInt16 %} &#9989; {% else %} &#10060;{% endif %} {{gpu_data.shaderInt16}}</td>
+  </tr>
+  <tr>
+    <td>Sparse Binding</td>
+    <td>{% if gpu_data.sparseBinding %} &#9989; {% else %} &#10060;{% endif %} {{gpu_data.sparseBinding}}</td>
+  </tr>
+  <tr>
+    <td>Texture Compression ETC2</td>
+    <td>{% if gpu_data.textureCompressionETC2 %} &#9989; {% else %} &#10060;{% endif %} {{gpu_data.textureCompressionETC2}}</td>
+  </tr>
+  <tr>
+    <td>Vertex Pipeline Stores and Atomics</td>
+    <td>{% if gpu_data.vertexPipelineStoresAndAtomics %} &#9989; {% else %} &#10060;{% endif %} {{gpu_data.vertexPipelineStoresAndAtomics}}</td>
+  </tr>
+  <tr>
+    <td>GPU Created By</td>
+    <td>{{gpu_data.createdBy}}</td>
+  </tr>
+  <tr>
+    <td>GPU Created Date</td>
+    <td>{{gpu_data.createdDate.strftime('%Y-%m-%d')}}</td>
+  </tr>
+  <tr>
+    <td>GPU Updated By</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>GPU Updated Date</td>
+    <td></td>
+  </tr>
+
+</table>
+{% endblock %}

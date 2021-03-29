@@ -87,3 +87,10 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+
+/* div scrol*/
+div.maindiv {
+  width: 70%;
+  height: 74%;
+  overflow: auto;
+}
