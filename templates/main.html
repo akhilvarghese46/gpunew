@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>GPU{% block title %} {% endblock %}</title>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
+  <script src="{{ url_for('static', filename='app-setup.js') }}"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+</head>
+
+<body>
+  <div class="maindiv" style="width: 70%;height: 70%;">
+    <h3 style="text-align:center">Graphics Processing Units</h3>
+
+    {% if user_data %}
+    {% if user_data.name %}
+    <p style="text-align:right"> Welcome to the Application - <br>{{ user_data.name}}</p>
+    {% elif user_data.email %}
+    <p style="text-align:right"> Welcome to the Application - <br>{{ user_data.email}}</p>
+    {% endif %}
+    {% else%}
+    <p style="text-align:right"> Welcome to the Application </p>
+    {% endif %}
+
+    <div clas="div_heading">
+      <table style="width:100%;text-align:center">
+        <tr>
+          <td class="anglebutton"><a href="/gpucreate">New GPU</a></td>
+          <td class="anglebutton"><a href="/gpulist">List All</a></td>
+          <td class="anglebutton"><a href="/gpusearch">Search/Filtter </a></td>
+          <td class="anglebutton"><a href="/gpucomparepage">Compare GPU Data </a></td>
+          <td class="anglebutton"><a href="/gpusignout">Sign Out </a></td>
+        </tr>
+      </table>
+
+      <div class="container">
+        {% block content %} {% endblock %}
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

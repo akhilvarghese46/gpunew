@@ -1,6 +1,13 @@
 'use strict';
 window.addEventListener('load', function() {
 
+  var signoutvalue = document.getElementById('sign-out').getAttribute('soutvalue');
+  if (signoutvalue = true) {
+    ;
+    setTimeout(function() {
+      document.getElementById('sign-out').click();
+    }, 500);
+  }
 
   document.getElementById('sign-out').onclick = function() {
     // ask firebase to sign out the use

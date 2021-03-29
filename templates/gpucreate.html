@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<form method="post" action="">
+  <h3>Create Graphics Processing Unit</h3>
+  <table>
+    <tr>
+      <td>Name</td>
+      <td><input type="text" name="name" required placeholder="Name of GPU" />
+        {% if error_message %}
+        {{error_message}}
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>Manufacturer</td>
+      <td><input type="text" required name="manufacturer" placeholder="Name of Manufacturer" /></td>
+    </tr>
+    <tr>
+      <td>Date Issued</td>
+      <td><input type="date" required name="doi" placeholder="DD-MM-YYYY" /></td>
+    </tr>
+    <tr>
+      <td>Geometry Shader</td>
+      <td><input type="checkbox" name="geometryShader" value="geometryShader" checked="true" /></td>
+    </tr>
+    <tr>
+      <td>Tesselation Shader</td>
+      <td><input type="checkbox" name="tesselationShader" value="tesselationShader" checked="true" /></td>
+    </tr>
+    <tr>
+      <td>Shader Int16</td>
+      <td><input type="checkbox" name="shaderInt16" value="shaderInt16" checked="true" /></td>
+    </tr>
+    <tr>
+      <td>Sparse Binding</td>
+      <td><input type="checkbox" name="sparseBinding" value="sparseBinding" checked="true" /></td>
+    </tr>
+    <tr>
+      <td>Texture Compression ETC2</td>
+      <td><input type="checkbox" name="textureCompressionETC2" value="textureCompressionETC2" checked="true" /></td>
+    </tr>
+    <tr>
+      <td>Vertex Pipeline Stores And Atomics</td>
+      <td><input type="checkbox" name="vertexPipelineStoresAndAtomics" value="vertexPipelineStoresAndAtomics" checked="true" /></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><button class="btncreate btn">Create</button></td>
+    </tr>
+  </table>
+</form>
+{% endblock %}
