@@ -1,0 +1,80 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<form method="post" action="">
+  <h3>Edit Graphics Processing Unit - {{gpu_data.name}} </h3>
+  <table>
+    <tr>
+      <td>Name</td>
+      <td>
+        <input type="text" contentEditable="true" name="editedname" required placeholder="Name of GPU" value="{{gpu_data.name}}" />
+        <input type="hidden" name="oldname" value="{{gpu_data.name}}" />
+      </td>
+
+    </tr>
+    <tr>
+      <td>Manufacturer</td>
+      <td><input type="text" contentEditable="true" required name="manufacturer" placeholder="Name of Manufacturer" value={{gpu_data.manufacturer}} /></td>
+    </tr>
+    <tr>
+      <td>Date Issued</td>
+      <td><input type="date" required name="doi" placeholder="DD-MM-YYYY" value={{gpu_data.doi}} /></td>
+    </tr>
+    <tr>
+      <td>Geometry Shader</td>
+      {% if gpu_data.geometryShader %}
+      <td><input type="checkbox" name="geometryShader" checked /></td>
+      {% else %}
+      <td><input type="checkbox" name="geometryShader" /></td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Tesselation Shader</td>
+      {% if gpu_data.tesselationShader %}
+      <td><input type="checkbox" name="tesselationShader" checked /></td>
+      {% else %}
+      <td><input type="checkbox" name="tesselationShader" /></td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Shader Int16</td>
+      {% if gpu_data.shaderInt16 %}
+      <td><input type="checkbox" name="shaderInt16" checked /></td>
+      {% else %}
+      <td><input type="checkbox" name="shaderInt16" /></td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Sparse Binding</td>
+      {% if gpu_data.sparseBinding %}
+      <td><input type="checkbox" name="sparseBinding" checked /></td>
+      {% else %}
+      <td><input type="checkbox" name="sparseBinding" /></td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Texture Compression ETC2</td>
+      {% if gpu_data.textureCompressionETC2 %}
+      <td><input type="checkbox" name="textureCompressionETC2" checked /></td>
+      {% else %}
+      <td><input type="checkbox" name="textureCompressionETC2" /></td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Vertex Pipeline Stores And Atomics</td>
+      {% if gpu_data.vertexPipelineStoresAndAtomics %}
+      <td><input type="checkbox" name="vertexPipelineStoresAndAtomics" checked /></td>
+      {% else %}
+      <td><input type="checkbox" name="vertexPipelineStoresAndAtomics" /></td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td><input type="hidden" name="createdBy" value="{{gpu_data.createdBy}}" </td>
+      <td><input type="hidden" name="createdDate" value="{{gpu_data.createdDate}}" </td>
+      <td>
+        <button class="btn">Update</button>
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

@@ -50,11 +50,11 @@
   </tr>
   <tr>
     <td>GPU Updated By</td>
-    <td></td>
+    <td>{%if gpu_data.editedBy%} {{gpu_data.editedBy}}{% endif %}</td>
   </tr>
   <tr>
     <td>GPU Updated Date</td>
-    <td></td>
+    <td>{%if gpu_data.editedDate%} {{gpu_data.editedDate.strftime('%Y-%m-%d')}}{% endif %}</td>
   </tr>
 
 </table>

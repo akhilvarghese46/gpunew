@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect
 from google.auth.transport import requests
 import google.oauth2.id_token
-import datetime
+from datetime import datetime
 import random
 from google.cloud import datastore
 from models import Gpu
+import datetime
 
 app = Flask(__name__)
 datastore_client = datastore.Client()
@@ -41,6 +42,16 @@ def getgpudata():
         data["name"] = i.key.name
         gpu_data.append(data)
     return gpu_data
+
+def getgpudetails(name):
+    entity_key = datastore_client.key("GpuInfo", name)
+    enitity_exists = datastore_client.get(key=entity_key)
+    if enitity_exists:
+        enitity_exists = dict(enitity_exists)
+        enitity_exists["name"] = name
+    else:
+        return render_template("error.html", error_message="No data found")
+    return enitity_exists
 
 #root function is a default function
 @app.route('/')
@@ -104,14 +115,60 @@ def gpudatadetails(name=None):
     user_data =checkUserData();
     if user_data != None:
         if name:
+            enitity_exists = getgpudetails(name)
+            if enitity_exists:
+                return render_template("gpudetails.html", gpu_data=enitity_exists, user_data=user_data)
+            else:
+                return render_template("error.html", error_message="No data found")
+    else:
+        error_message = "Page is not loaded! User Data is missing"
+        return render_template("index.html", user_data=user_data, error_message=error_message)
+
+
+@app.route("/gpuedit/<name>", methods=["GET", "POST"])
+def gpudataedit(name=None):
+    user_data =checkUserData();
+    if user_data != None:
+        if name:
             entity_key = datastore_client.key("GpuInfo", name)
             enitity_exists = datastore_client.get(key=entity_key)
             if enitity_exists:
                 enitity_exists = dict(enitity_exists)
                 enitity_exists["name"] = name
-                return render_template("gpudetails.html", gpu_data=enitity_exists, user_data=user_data)
-            else:
-                return render_template("error.html", error_message="No data found")
+                if request.method == "GET":
+                    return render_template("gpuedit.html", gpu_data=enitity_exists, user_data=user_data)
+                else:
+                    try:
+                        data = dict(request.form)
+                        if(data.get("editedname") != data.get("oldname") ):
+                            newentry_key = datastore_client.key("GpuInfo", data.get("editedname"))
+                            newenitity_exists = datastore_client.get(key=newentry_key)
+                            if newenitity_exists:
+                                error_message = "An entry with same name already exists. try with an another name"
+                                return render_template("error.html", error_message=error_message)
+                        entity = datastore.Entity(key=entity_key)
+                        gpu = Gpu(name=data.get("editedname"), doi=data.get("doi"), manufacturer=data.get("manufacturer"))
+                        gpu.set_properties('createdBy', data.get('createdBy'))
+                        cr_date =data.get('createdDate')
+                        gpu.set_properties('createdDate', datetime.datetime.strptime(cr_date[:19], '%Y-%m-%d %H:%M:%S'))
+                        gpu.set_properties('editedBy', user_data['email'])
+                        gpu.set_properties('editedDate', datetime.datetime.now())
+                        for key in BOOLEAN_KEY_LIST:
+                            if key in data:
+                                gpu.set_properties(key, True)
+                            else:
+                                gpu.set_properties(key, False)
+                        obj = gpu.__dict__
+                        obj.pop("name")
+                        entity.update(obj)
+                        datastore_client.put(entity)
+                        enitity_exists = getgpudetails(data.get("editedname"))
+                        if enitity_exists:
+                            return render_template("gpudetails.html", gpu_data=enitity_exists, user_data=user_data)
+                        else:
+                            return render_template("error.html", error_message="No data found")
+                    except Exception as e:
+                        return render_template("error.html", error_message=str(e))
     else:
         error_message = "Page is not loaded! User Data is missing"
         return render_template("index.html", user_data=user_data, error_message=error_message)
