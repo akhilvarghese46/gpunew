@@ -39,11 +39,11 @@
     <th>Texture Compression ETC2</th>
     <th>Vertex Pipeline Stores and Atomics</th>
   </tr>
-
-  <!--  <tr>-->
-  <!--    <td colspan="10" style="text-align: center;">&#45;&#45;&#45;&#45;&#45;&#45; No GPU Data found &#45;&#45;&#45;&#45;&#45;&#45;</td>-->
-  <!--  </tr>-->
-
+  {% if gpu_list|length == 0 %}
+  <tr>
+    <td colspan="10" style="text-align: center;">------ No GPU Data found ------</td>
+  </tr>
+  {%else:%}
   {% for gpu_data in gpu_list %}
 
   <tr>
@@ -58,6 +58,6 @@
     <td>{{gpu_data.vertexPipelineStoresAndAtomics}}</td>
   </tr>
   {% endfor %}
-
+  {%endif%}
 </table>
 {% endblock %}

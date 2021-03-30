@@ -206,7 +206,15 @@ def gpudatasearch():
         error_message = "Page is not loaded! User Data is missing"
         return render_template("index.html", user_data=user_data, error_message=error_message)
 
-
+@app.route("/gpudelete/<name>", methods=["GET", "POST"])
+def gpudatadelete(name=None):
+    user_data =checkUserData();
+    if name:
+        name_list = []
+        entity_key = datastore_client.key("GpuInfo", name)
+        datastore_client.delete(key=entity_key)
+        gpu_data = getgpudata()
+        return render_template("gpulist.html", user_data=user_data, gpu_list=gpu_data)
 
 @app.route("/gpusignout", methods=["GET", "POST"])
 def gpusignout():
