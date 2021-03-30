@@ -20,6 +20,14 @@ BOOLEAN_KEY_LIST = [
     "vertexPipelineStoresAndAtomics",
 ]
 
+BOOLEAN_KEY_PAIR = {
+    "geosh": "geometryShader",
+    "tessh": "tesselationShader",
+    "shain": "shaderInt16",
+    "sparbi": "sparseBinding",
+    "texco": "textureCompressionETC2",
+    "verpip": "vertexPipelineStoresAndAtomics",
+}
 def checkUserData():
     id_token = request.cookies.get("token")
     error_message = None
@@ -172,6 +180,27 @@ def gpudataedit(name=None):
     else:
         error_message = "Page is not loaded! User Data is missing"
         return render_template("index.html", user_data=user_data, error_message=error_message)
+
+@app.route("/gpusearch", methods=["GET", "POST"])
+def gpudatasearch():
+    user_data =checkUserData();
+    if user_data != None:
+        gpu_data = []
+        query_params = dict(request.args))
+        query = datastore_client.query(kind="GpuInfo")
+        for key in query_params.keys():
+            query.add_filter(BOOLEAN_KEY_PAIR[key], "=", True)
+        query = query.fetch()
+        for i in query:
+            data = dict(i)
+            data["name"] = i.key.name
+            gpu_data.append(data)
+        return render_template("gpusearch.html", gpu_list=gpu_data, user_data=user_data)
+    else:
+        error_message = "Page is not loaded! User Data is missing"
+        return render_template("index.html", user_data=user_data, error_message=error_message)
+
+
 
 @app.route("/gpusignout", methods=["GET", "POST"])
 def gpusignout():

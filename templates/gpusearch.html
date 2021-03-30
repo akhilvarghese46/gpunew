@@ -1,0 +1,63 @@
+{% extends "main.html" %}
+{% block title %} Search {% endblock %}
+{% block content %}
+<h3>GPU Features Filter</h3>
+<form action="" method="get">
+  <table style="width:70%">
+    <tr>
+      <td><input type="checkbox" name="geosh" value="1" /></td>
+      <td>Geometry Shader</td>
+      <td><input type="checkbox" name="tessh" value="1" /></td>
+      <td>Tesselation Shader</td>
+      <td><input type="checkbox" name="shain" value="1" /></td>
+      <td>Shader Int16</td>
+    </tr>
+    <tr>
+      <td><input type="checkbox" name="sparbi" value="1" /></td>
+      <td>Sparse Binding</td>
+      <td><input type="checkbox" name="texco" value="1" /></td>
+      <td>Texture Compression ETC2</td>
+      <td><input type="checkbox" name="verpip" value="1" /></td>
+      <td>Vertex Pipeline Stores and Atomics</td>
+    </tr>
+    <tr>
+      <td colspan="3"><button>Search</button></td>
+    </tr>
+  </table>
+</form>
+
+<h3>Graphics Processing Units Filtter</h3>
+<table border="1" style="width:100%;border-collapse:collapse">
+  <tr>
+    <th style="width: 15%;">Name</th>
+    <th>Manufacturer</th>
+    <th style="width: 15%;">Date of Issue</th>
+    <th>Geometry Shader</th>
+    <th>Tesselation Shader</th>
+    <th>Shader Int16</th>
+    <th>Sparse Binding</th>
+    <th>Texture Compression ETC2</th>
+    <th>Vertex Pipeline Stores and Atomics</th>
+  </tr>
+
+  <!--  <tr>-->
+  <!--    <td colspan="10" style="text-align: center;">&#45;&#45;&#45;&#45;&#45;&#45; No GPU Data found &#45;&#45;&#45;&#45;&#45;&#45;</td>-->
+  <!--  </tr>-->
+
+  {% for gpu_data in gpu_list %}
+
+  <tr>
+    <td>{{gpu_data.name}}</td>
+    <td>{{gpu_data.manufacturer}}</td>
+    <td>{{gpu_data.doi}}</td>
+    <td>{{gpu_data.geometryShader}}</td>
+    <td>{{gpu_data.tesselationShader}}</td>
+    <td>{{gpu_data.shaderInt16}}</td>
+    <td>{{gpu_data.sparseBinding}}</td>
+    <td>{{gpu_data.textureCompressionETC2}}</td>
+    <td>{{gpu_data.vertexPipelineStoresAndAtomics}}</td>
+  </tr>
+  {% endfor %}
+
+</table>
+{% endblock %}
