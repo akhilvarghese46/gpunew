@@ -5,7 +5,6 @@ from datetime import datetime
 import random
 from google.cloud import datastore
 from models import Gpu
-import datetime
 
 app = Flask(__name__)
 datastore_client = datastore.Client()
@@ -93,7 +92,7 @@ def gpudatacreate():
                     else:
                         gpu.set_properties(key, False)
                 gpu.set_properties('createdBy', user_data['email'])
-                gpu.set_properties('createdDate', datetime.datetime.now())
+                gpu.set_properties('createdDate', datetime.now())
                 entity.update(gpu.__dict__)
                 datastore_client.put(entity)
             else:
@@ -149,18 +148,21 @@ def gpudataedit(name=None):
                     try:
                         data = dict(request.form)
                         if(data.get("editedname") != data.get("oldname") ):
-                            newentry_key = datastore_client.key("GpuInfo", data.get("editedname"))
-                            newenitity_exists = datastore_client.get(key=newentry_key)
+                            entity_key = datastore_client.key("GpuInfo", data.get("editedname"))
+                            newenitity_exists = datastore_client.get(key=entity_key)
                             if newenitity_exists:
                                 error_message = "An entry with same name already exists. try with an another name"
                                 return render_template("error.html", error_message=error_message)
+                            else:
+                                entity_key_old = datastore_client.key("GpuInfo", name)
+                                datastore_client.delete(key=entity_key_old)
                         entity = datastore.Entity(key=entity_key)
                         gpu = Gpu(name=data.get("editedname"), doi=data.get("doi"), manufacturer=data.get("manufacturer"))
                         gpu.set_properties('createdBy', data.get('createdBy'))
                         cr_date =data.get('createdDate')
-                        gpu.set_properties('createdDate', datetime.datetime.strptime(cr_date[:19], '%Y-%m-%d %H:%M:%S'))
+                        gpu.set_properties('createdDate', datetime.strptime(cr_date[:19], '%Y-%m-%d %H:%M:%S'))
                         gpu.set_properties('editedBy', user_data['email'])
-                        gpu.set_properties('editedDate', datetime.datetime.now())
+                        gpu.set_properties('editedDate', datetime.now())
                         for key in BOOLEAN_KEY_LIST:
                             if key in data:
                                 gpu.set_properties(key, True)
@@ -186,10 +188,14 @@ def gpudatasearch():
     user_data =checkUserData();
     if user_data != None:
         gpu_data = []
-        query_params = dict(request.args))
+        query_params = dict(request.args)
         query = datastore_client.query(kind="GpuInfo")
-        for key in query_params.keys():
-            query.add_filter(BOOLEAN_KEY_PAIR[key], "=", True)
+        for key in BOOLEAN_KEY_PAIR:
+            if key in query_params.keys():
+                query.add_filter(BOOLEAN_KEY_PAIR[key], "=", True)
+            else:
+                query.add_filter(BOOLEAN_KEY_PAIR[key], "=", False)
+
         query = query.fetch()
         for i in query:
             data = dict(i)
