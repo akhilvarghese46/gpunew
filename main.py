@@ -216,6 +216,31 @@ def gpudatadelete(name=None):
         gpu_data = getgpudata()
         return render_template("gpulist.html", user_data=user_data, gpu_list=gpu_data)
 
+@app.route("/gpucomparepage", methods=["GET", "POST"])
+def gpudatacompare():
+    user_data =checkUserData();
+    if user_data != None:
+        data = dict(request.form)
+        if data:
+            if len(data) != 2:
+                error_message = "Select 2 GPU to compare data"
+                return render_template("error.html", error_message=error_message)
+            key_one = data[list(data.keys())[0]]
+            key_two = data[list(data.keys())[1]]
+            enititydataone = getgpudetails(key_one)
+            enititydatatwo = getgpudetails(key_two)
+            return render_template("gpucompareresult.html" , user_data=user_data, gpu_listone = enititydataone , gpu_listtwo = enititydatatwo)
+        try:
+            gpu_data = getgpudata()
+            return render_template("gpucomparepage.html", user_data=user_data, gpu_list=gpu_data)
+        except ValueError as exc:
+            error_message = str(exc)
+            return render_template("error.html", error_message=error_message)
+    else:
+        error_message = "Page is not loaded! User Data is missing"
+        return render_template("index.html", user_data=user_data, error_message=error_message)
+
+
 @app.route("/gpusignout", methods=["GET", "POST"])
 def gpusignout():
     return render_template("index.html", signoutdata="true")

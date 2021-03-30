@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+{% block title %}compare form{% endblock %}
+{% block content %}
+
+<h3> Graphics Processing Units Compare</h3>
+<p>Select Any 2 GPU's</p>
+
+<form method="post" action="">
+  <table border="1" style="width:70%;border-collapse:collapse">
+    <tr>
+      <th>Name</th>
+      <th>Manufacturer</th>
+      <th>Date of Issue</th>
+      <th>Select 2 For Compare</th>
+    </tr>
+    {% if gpu_list|length == 0 %}
+    <tr>
+      <td colspan="4" style="text-align: center;">------ No GPU Data found ------</td>
+    </tr>
+    {% else: %}
+    {% for gpu_data in gpu_list %}
+    <tr>
+      <td>{{gpu_data.name}}</td>
+      <td>{{gpu_data.manufacturer}}</td>
+      <td>{{gpu_data.doi}}</td>
+      <td><input type="checkbox" name="checkGpu_{{gpu_data.name}}" value="{{gpu_data.name}}" /></td>
+    </tr>
+    {% endfor %}
+    {%endif%}
+  </table>
+  <div class="chkcompare divcenter">
+    <button class="btn" style="width: 13%;">Compare</button>
+  </div>
+</form>
+{% endblock %}
+{% block js %}
+<script>
+
+</script>
+{% endblock %}

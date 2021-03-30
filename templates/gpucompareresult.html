@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+{% block title %}compare result{% endblock %}
+{% block content %}
+<h3> Graphics Processing Units Comparing Report</h3>
+
+<table border="1" style="width:70%;border-collapse:collapse">
+  <tr>
+    <th>Name</th>
+    <td>{{gpu_listone.name}}</td>
+    <td>{{gpu_listtwo.name}}</td>
+  </tr>
+  <tr>
+    <th>Manufacturer</th>
+    <td>{{gpu_listone.manufacturer}}</td>
+    <td>{{gpu_listtwo.manufacturer}}</td>
+  </tr>
+  <tr>
+    <th>Date of Issue</th>
+    <td>{{gpu_listone.doi}}</td>
+    <td>{{gpu_listtwo.doi}}</td>
+  </tr>
+  <tr>
+    <th>Geometry Shader</th>
+    <td>{% if gpu_listone.geometryShader %} &#9989; {% else %} &#10060;{% endif %}</td>
+    <td>{% if gpu_listtwo.geometryShader %} &#9989; {% else %} &#10060;{% endif %}</td>
+  </tr>
+  <tr>
+    <th>Tesselation Shader</th>
+    <td>{% if gpu_listone.tesselationShader %} &#9989; {% else %} &#10060;{% endif %}</td>
+    <td>{% if gpu_listtwo.tesselationShader %} &#9989; {% else %} &#10060;{% endif %}</td>
+  </tr>
+  <tr>
+    <th>Shader Int16</th>
+    <td>{% if gpu_listone.shaderInt16 %} &#9989; {% else %} &#10060;{% endif %}</td>
+    <td>{% if gpu_listtwo.shaderInt16 %} &#9989; {% else %} &#10060;{% endif %}</td>
+  </tr>
+  <tr>
+    <th>Sparse Binding</th>
+    <td>{% if gpu_listone.sparseBinding %} &#9989; {% else %} &#10060;{% endif %}</td>
+    <td>{% if gpu_listtwo.sparseBinding %} &#9989; {% else %} &#10060;{% endif %}</td>
+  </tr>
+  <tr>
+    <th>Texture Compression ETC2</th>
+    <td>{% if gpu_listone.textureCompressionETC2 %} &#9989; {% else %} &#10060;{% endif %}</td>
+    <td>{% if gpu_listtwo.textureCompressionETC2 %} &#9989; {% else %} &#10060;{% endif %}</td>
+  </tr>
+  <tr>
+    <th>Vertex Pipeline Stores and Atomics</th>
+    <td>{% if gpu_listone.vertexPipelineStoresAndAtomics %} &#9989; {% else %} &#10060;{% endif %}</td>
+    <td>{% if gpu_listtwo.vertexPipelineStoresAndAtomics %} &#9989; {% else %} &#10060;{% endif %}</td>
+  </tr>
+</table>
+
+
+
+{% endblock %}

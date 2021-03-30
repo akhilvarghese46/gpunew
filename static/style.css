@@ -94,3 +94,8 @@ div.maindiv {
   height: 74%;
   overflow: auto;
 }
+
+.divcenter {
+  padding: 41px 0px;
+  text-align: center;
+}
