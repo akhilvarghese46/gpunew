@@ -96,6 +96,17 @@ div.maindiv {
 }
 
 .divcenter {
-  padding: 41px 0px;
+  padding: 10px 0px;
   text-align: center;
+}
+
+input {
+  height: 27px;
+  border-color: #030303;
+  background-color: #ebebeb;
+  font-weight: bold
+}
+
+th {
+  background-color: #dddddd
 }
