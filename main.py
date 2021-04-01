@@ -76,9 +76,9 @@ def gpudatacreate():
     user_data =checkUserData()
     if user_data != None:
         data = dict(request.form)
-
-        name = data.get("name")
-        if name:
+        newname = data.get("name")
+        if newname:
+            name = str(newname).upper();
             entity_key = datastore_client.key("GpuInfo", name)
             enitity_exists = datastore_client.get(key=entity_key)
             if not enitity_exists:
@@ -136,6 +136,7 @@ def gpudatadetails(name=None):
 def gpudataedit(name=None):
     user_data =checkUserData();
     if user_data != None:
+        name = str(name).upper();
         if name:
             entity_key = datastore_client.key("GpuInfo", name)
             enitity_exists = datastore_client.get(key=entity_key)
@@ -147,8 +148,10 @@ def gpudataedit(name=None):
                 else:
                     try:
                         data = dict(request.form)
-                        if(data.get("editedname") != data.get("oldname") ):
-                            entity_key = datastore_client.key("GpuInfo", data.get("editedname"))
+                        editedname =str(data.get("editedname")).upper();
+                        oldname =str(data.get("oldname")).upper();
+                        if(editedname != oldname ):
+                            entity_key = datastore_client.key("GpuInfo", editedname)
                             newenitity_exists = datastore_client.get(key=entity_key)
                             if newenitity_exists:
                                 error_message = "An entry with same name already exists. try with an another name"
@@ -157,7 +160,7 @@ def gpudataedit(name=None):
                                 entity_key_old = datastore_client.key("GpuInfo", name)
                                 datastore_client.delete(key=entity_key_old)
                         entity = datastore.Entity(key=entity_key)
-                        gpu = Gpu(name=data.get("editedname"), doi=data.get("doi"), manufacturer=data.get("manufacturer"))
+                        gpu = Gpu(name=editedname, doi=data.get("doi"), manufacturer=data.get("manufacturer"))
                         gpu.set_properties('createdBy', data.get('createdBy'))
                         cr_date =data.get('createdDate')
                         gpu.set_properties('createdDate', datetime.strptime(cr_date[:19], '%Y-%m-%d %H:%M:%S'))
@@ -172,7 +175,7 @@ def gpudataedit(name=None):
                         obj.pop("name")
                         entity.update(obj)
                         datastore_client.put(entity)
-                        enitity_exists = getgpudetails(data.get("editedname"))
+                        enitity_exists = getgpudetails(editedname)
                         if enitity_exists:
                             return render_template("gpudetails.html", gpu_data=enitity_exists, user_data=user_data)
                         else:

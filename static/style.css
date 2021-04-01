@@ -104,7 +104,8 @@ input {
   height: 27px;
   border-color: #030303;
   background-color: #ebebeb;
-  font-weight: bold
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 th {
