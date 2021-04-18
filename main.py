@@ -37,7 +37,7 @@ def checkUserData():
         try:
             claims = google.oauth2.id_token.verify_firebase_token(id_token,firebase_request_adapter)
         except ValueError as exc:
-            error_message = str(exc)
+            return render_template("error.html", error_message=str(exc))
     return claims
 
 def getgpudata():
