@@ -5,14 +5,14 @@
 <table border="1" style="border-collapse:collapse;table-layout: fixed; word-wrap: break-word;">
   <colgroup>
     <col span="1" style="width: 30%;">
-    <col span="1" style="width: 28%;">
+    <!---<col span="1" style="width: 28%;">
     <col span="1" style="width: 35%;">
     <col span="1" style="width: 25%;">
     <col span="1" style="width: 25%;">
     <col span="1" style="width: 25%;">
     <col span="1" style="width: 25%;">
     <col span="1" style="width: 25%;">
-    <col span="1" style="width: 25%;">
+    <col span="1" style="width: 25%;">--->
     <col span="1" style="width: 25%;">
   </colgroup>
   <tr>
@@ -29,7 +29,7 @@
   </tr>
   {% if gpu_list|length == 0 %}
   <tr>
-    <td colspan="10" style="text-align: center;">------ No GPU Data found ------</td>
+    <td colspan="2" style="text-align: center;">------ No GPU Data found ------</td>
   </tr>
   {% else: %}
   {% for gpu_data in gpu_list %}
